@@ -8,7 +8,9 @@ from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.models.document import Document, DocumentChunk
 from app.services.document_processor import process_document
-from app.services.retrieval import retrieve_chunks
+from app.services.retrieval import hybrid_retrieve_chunks, rerank_chunks
+from app.services.generation import generate_answer
+from app.services.confidence import calculate_confidence
 
 
 router = APIRouter()
@@ -21,6 +23,7 @@ ALLOWED_EXTENSIONS = {".pdf", ".txt"}
 
 class QueryRequest(BaseModel):
     query: str
+    document_id: str
     limit: int = 5
 
 
@@ -83,13 +86,29 @@ def query_documents(
     request: QueryRequest,
     db: Session = Depends(get_db),
 ):
-    results = retrieve_chunks(
+    candidates = hybrid_retrieve_chunks(
         db=db,
         query=request.query,
+        document_id=request.document_id,
         limit=request.limit,
+    )
+
+    results = rerank_chunks(
+        query=request.query,
+        chunks=candidates,
+        limit=request.limit,
+    )
+
+    confidence = calculate_confidence(results)
+
+    answer = generate_answer(
+        query=request.query,
+        chunks=results,
     )
 
     return {
         "query": request.query,
+        "answer": answer,
+        "confidence": confidence,
         "results": results,
     }

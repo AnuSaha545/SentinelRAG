@@ -1,7 +1,8 @@
 from datetime import datetime
 
 from pgvector.sqlalchemy import Vector
-from sqlalchemy import DateTime, ForeignKey, Integer, String, Text
+from sqlalchemy import Computed, DateTime, ForeignKey, Integer, String, Text
+from sqlalchemy.dialects.postgresql import TSVECTOR
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 
@@ -11,7 +12,6 @@ class Base(DeclarativeBase):
 
 class Document(Base):
     __tablename__ = "documents"
-
     id: Mapped[str] = mapped_column(String(36), primary_key=True)
     filename: Mapped[str] = mapped_column(String(255), nullable=False)
     created_at: Mapped[datetime] = mapped_column(
@@ -20,10 +20,8 @@ class Document(Base):
         nullable=False,
     )
 
-
 class DocumentChunk(Base):
     __tablename__ = "document_chunks"
-
     id: Mapped[int] = mapped_column(
         Integer,
         primary_key=True,
@@ -46,3 +44,8 @@ class DocumentChunk(Base):
         Vector(384),
         nullable=False,
     )
+    search_vector: Mapped[str] = mapped_column(
+    TSVECTOR,
+    Computed("to_tsvector('english', content)", persisted=True),
+    nullable=True,
+)
