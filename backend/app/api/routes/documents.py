@@ -1,0 +1,95 @@
+from pathlib import Path
+from uuid import uuid4
+
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
+from pydantic import BaseModel
+from sqlalchemy.orm import Session
+
+from app.core.database import get_db
+from app.models.document import Document, DocumentChunk
+from app.services.document_processor import process_document
+from app.services.retrieval import retrieve_chunks
+
+
+router = APIRouter()
+
+UPLOAD_DIR = Path("uploads")
+UPLOAD_DIR.mkdir(exist_ok=True)
+
+ALLOWED_EXTENSIONS = {".pdf", ".txt"}
+
+
+class QueryRequest(BaseModel):
+    query: str
+    limit: int = 5
+
+
+@router.post("/upload")
+async def upload_document(
+    file: UploadFile = File(...),
+    db: Session = Depends(get_db),
+):
+    extension = Path(file.filename or "").suffix.lower()
+
+    if extension not in ALLOWED_EXTENSIONS:
+        raise HTTPException(
+            status_code=400,
+            detail="Only PDF and TXT files are supported.",
+        )
+
+    document_id = str(uuid4())
+    file_path = UPLOAD_DIR / f"{document_id}_{file.filename}"
+
+    content = await file.read()
+    file_path.write_bytes(content)
+
+    try:
+        processed_chunks = process_document(str(file_path))
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=400,
+            detail=str(exc),
+        )
+
+    document = Document(
+        id=document_id,
+        filename=file.filename,
+    )
+
+    db.add(document)
+
+    for chunk in processed_chunks:
+        db.add(
+            DocumentChunk(
+                document_id=document_id,
+                chunk_index=chunk["chunk_index"],
+                content=chunk["text"],
+                embedding=chunk["embedding"],
+            )
+        )
+
+    db.commit()
+
+    return {
+        "document_id": document_id,
+        "filename": file.filename,
+        "chunks": len(processed_chunks),
+        "status": "stored",
+    }
+
+
+@router.post("/query")
+def query_documents(
+    request: QueryRequest,
+    db: Session = Depends(get_db),
+):
+    results = retrieve_chunks(
+        db=db,
+        query=request.query,
+        limit=request.limit,
+    )
+
+    return {
+        "query": request.query,
+        "results": results,
+    }
