@@ -8,7 +8,7 @@ with DATASET_FILE.open("r", encoding="utf-8") as file:
     data = json.load(file)
 
 
-question_ids = {6, 23, 31, 36, 37, 38, 40, 41, 44}
+question_ids = {2, 12, 17, 18, 24, 40, 56, 65}
 
 features = [
     "top_similarity",

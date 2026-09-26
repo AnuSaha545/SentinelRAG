@@ -53,18 +53,60 @@ def keyword_retrieve_chunks(
     document_id: str,
     limit: int = 5,
 ) -> list[dict]:
+    import re
+
+    terms = re.findall(r"[A-Za-z0-9]+", query.lower())
+
+    stop_words = {
+        "what",
+        "are",
+        "the",
+        "is",
+        "a",
+        "an",
+        "of",
+        "to",
+        "in",
+        "on",
+        "for",
+        "and",
+        "or",
+        "how",
+        "does",
+        "do",
+        "can",
+        "be",
+    }
+
+    terms = [
+        term
+        for term in terms
+        if term not in stop_words and len(term) >= 3
+    ]
+
+    if not terms:
+        return []
+
+    tsquery = " | ".join(terms)
+
+    rank = func.ts_rank(
+        DocumentChunk.search_vector,
+        func.to_tsquery("english", tsquery),
+    ).label("rank")
+
     statement = (
-        select(DocumentChunk)
+        select(DocumentChunk, rank)
         .where(
             DocumentChunk.document_id == document_id,
             DocumentChunk.search_vector.op("@@")(
-                func.websearch_to_tsquery("english", query)
+                func.to_tsquery("english", tsquery)
             ),
         )
+        .order_by(rank.desc())
         .limit(limit)
     )
 
-    results = db.execute(statement).scalars().all()
+    results = db.execute(statement).all()
 
     return [
         {
@@ -72,8 +114,9 @@ def keyword_retrieve_chunks(
             "document_id": chunk.document_id,
             "chunk_index": chunk.chunk_index,
             "content": chunk.content,
+            "keyword_score": round(float(rank_value), 4),
         }
-        for chunk in results
+        for chunk, rank_value in results
     ]
 
 
@@ -81,7 +124,7 @@ def hybrid_retrieve_chunks(
     db: Session,
     query: str,
     document_id: str,
-    limit: int = 5,
+    limit: int = 10,
 ) -> list[dict]:
     vector_results = retrieve_chunks(
         db=db,
@@ -103,6 +146,7 @@ def hybrid_retrieve_chunks(
         combined[result["chunk_id"]] = {
             **result,
             "retrieval_methods": ["vector"],
+            "keyword_score": 0.0,
         }
 
     for result in keyword_results:
@@ -110,14 +154,54 @@ def hybrid_retrieve_chunks(
 
         if chunk_id in combined:
             combined[chunk_id]["retrieval_methods"].append("keyword")
+            combined[chunk_id]["keyword_score"] = result.get(
+                "keyword_score",
+                0.0,
+            )
         else:
             combined[chunk_id] = {
                 **result,
+                "similarity": 0.0,
                 "retrieval_methods": ["keyword"],
             }
 
-    return list(combined.values())
+    results = list(combined.values())
 
+    # Normalize scores before combining them.
+    max_similarity = max(
+        (item.get("similarity", 0.0) for item in results),
+        default=0.0,
+    )
+
+    max_keyword_score = max(
+        (item.get("keyword_score", 0.0) for item in results),
+        default=0.0,
+    )
+
+    for item in results:
+        vector_score = (
+            item.get("similarity", 0.0) / max_similarity
+            if max_similarity > 0
+            else 0.0
+        )
+
+        keyword_score = (
+            item.get("keyword_score", 0.0) / max_keyword_score
+            if max_keyword_score > 0
+            else 0.0
+        )
+
+        item["hybrid_score"] = round(
+            0.6 * vector_score + 0.4 * keyword_score,
+            4,
+        )
+
+    results.sort(
+        key=lambda item: item["hybrid_score"],
+        reverse=True,
+    )
+
+    return results[:limit]
 
 def rerank_chunks(
     query: str,

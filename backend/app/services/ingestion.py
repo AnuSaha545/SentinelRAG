@@ -1,4 +1,5 @@
 from pathlib import Path
+import re
 
 from pypdf import PdfReader
 
@@ -8,7 +9,22 @@ def extract_text(file_path: str) -> str:
 
     if path.suffix.lower() == ".pdf":
         reader = PdfReader(file_path)
-        return "\n".join(page.extract_text() or "" for page in reader.pages)
+        pages = []
+
+        for page in reader.pages:
+            text = page.extract_text() or ""
+            pages.append(text)
+
+        text = "\n".join(pages)
+
+        # Fix common PDF extraction artifacts.
+        text = re.sub(
+            r"(?<=\b[A-Za-z])\s+(?=[a-z]{1,3}\b)",
+            "",
+            text,
+        )
+
+        return text
 
     if path.suffix.lower() == ".txt":
         return path.read_text(encoding="utf-8")

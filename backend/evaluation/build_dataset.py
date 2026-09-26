@@ -159,7 +159,7 @@ for index, result in enumerate(results, start=1):
             max_nli_contradiction,
             4,
         ),
-        "correct": label_map[index],
+        "correct": label_map[result["question_id"]],
     })
 
 
