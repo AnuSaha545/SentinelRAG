@@ -1,0 +1,602 @@
+[
+  {
+    "question_id": "Q01",
+    "question": "What is the purpose of the NIST Cybersecurity Framework (CSF) 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q02",
+    "question": "What are the three main components of the CSF 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q03",
+    "question": "What is the CSF Core?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q04",
+    "question": "What are the six Functions in the NIST CSF 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q05",
+    "question": "What is the purpose of the Govern Function?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q06",
+    "question": "What is the purpose of the Identify Function?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q07",
+    "question": "What is the purpose of the Protect Function?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q08",
+    "question": "What is the purpose of the Detect Function?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q09",
+    "question": "What is the purpose of the Respond Function?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q10",
+    "question": "What is the purpose of the Recover Function?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q11",
+    "question": "How are Functions, Categories, and Subcategories related in the CSF Core?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q12",
+    "question": "Are CSF outcomes intended to prescribe exactly how an organization must achieve cybersecurity?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q13",
+    "question": "What is a CSF Organizational Profile?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q14",
+    "question": "What is the difference between a Current Profile and a Target Profile?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q15",
+    "question": "What factors can an organization consider when developing an Organizational Profile?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q16",
+    "question": "How can Organizational Profiles help an organization prioritize cybersecurity actions?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q17",
+    "question": "What are CSF Implementation Tiers?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q18",
+    "question": "What are the four CSF Implementation Tiers?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q19",
+    "question": "What does Tier 1 represent in the CSF Implementation Tiers?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q20",
+    "question": "What does Tier 4 represent in the CSF Implementation Tiers?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q21",
+    "question": "How do CSF Tiers provide context about an organization's cybersecurity risk management?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q22",
+    "question": "What are Informative References in the CSF?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q23",
+    "question": "What are Implementation Examples?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q24",
+    "question": "Are Implementation Examples intended to be a comprehensive list of every action an organization must take?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q25",
+    "question": "What is the relationship between the CSF Core and Informative References?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q26",
+    "question": "What types of organizations can use the NIST CSF 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q27",
+    "question": "Is the CSF designed to be tailored to an organization's specific cybersecurity risks and mission objectives?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q28",
+    "question": "What types of technology environments does the CSF Core apply to?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q29",
+    "question": "Does the CSF Core apply to Internet of Things and operational technology environments?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q30",
+    "question": "How should the CSF Functions be addressed in relation to cybersecurity incidents?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q31",
+    "question": "Which Functions primarily help organizations prevent and prepare for cybersecurity incidents?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q32",
+    "question": "Which Functions help organizations discover and manage cybersecurity incidents?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q33",
+    "question": "Why does the CSF use cybersecurity outcomes instead of prescribing a specific process?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q34",
+    "question": "How can an organization use a Current Profile and Target Profile together?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q35",
+    "question": "What is the role of the CSF in understanding, assessing, prioritizing, and communicating cybersecurity risks?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q36",
+    "question": "Who is currently the Director of NIST?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q37",
+    "question": "What is the current market share of NIST in the cybersecurity industry?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q38",
+    "question": "What is the annual budget allocated to NIST for cybersecurity research?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q39",
+    "question": "Which cybersecurity software product is officially recommended by NIST CSF 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q40",
+    "question": "What programming language was used to develop the NIST CSF 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q41",
+    "question": "What is the exact number of employees working at NIST?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q42",
+    "question": "What is the price of implementing CSF 2.0 for a small business?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q43",
+    "question": "Which antivirus software should an organization use according to the CSF 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q44",
+    "question": "What is the exact percentage reduction in cyberattacks that organizations achieve after adopting CSF 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q45",
+    "question": "Which cloud provider does NIST officially recommend for implementing CSF 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q46",
+    "question": "What is the average cost of a cybersecurity incident according to CSF 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q47",
+    "question": "Which commercial cybersecurity vendor has the highest security rating according to NIST CSF 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q48",
+    "question": "What is the exact number of organizations worldwide that currently use CSF 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q49",
+    "question": "What is the exact salary of a cybersecurity analyst who implements CSF 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q50",
+    "question": "Which programming framework should developers use to build a CSF 2.0 implementation?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q51",
+    "question": "What are the three levels of the CSF Core hierarchy?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q52",
+    "question": "What is the highest level of organization for cybersecurity outcomes in the CSF Core?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q53",
+    "question": "What do CSF Categories provide within a Function?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q54",
+    "question": "What do CSF Subcategories provide within a Category?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q55",
+    "question": "Why are CSF Core outcomes described as sector-, country-, and technology-neutral?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q56",
+    "question": "Does the CSF prescribe the specific cybersecurity controls an organization must implement?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q57",
+    "question": "How can the CSF Core, Organizational Profiles, and Tiers be used together?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q58",
+    "question": "What does a Current Profile describe?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q59",
+    "question": "What does a Target Profile specify?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q60",
+    "question": "What is gap analysis in the context of CSF Organizational Profiles?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q61",
+    "question": "What is the purpose of an action plan after identifying gaps between Current and Target Profiles?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q62",
+    "question": "What is a CSF Community Profile?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q63",
+    "question": "What do CSF Tiers characterize?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q64",
+    "question": "How are CSF Tiers applied to Organizational Profiles?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q65",
+    "question": "What are the four CSF Implementation Tier names?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 1
+  },
+  {
+    "question_id": "Q66",
+    "question": "What is NIST's annual operating budget for the CSF program?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q67",
+    "question": "How many organizations are certified by NIST for CSF 2.0 compliance?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q68",
+    "question": "What percentage of organizations achieve full CSF 2.0 compliance?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q69",
+    "question": "Which commercial cybersecurity product does NIST require for CSF 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q70",
+    "question": "Which cloud provider is preferred by NIST for CSF 2.0 deployments?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q71",
+    "question": "What is the licensing fee for using the NIST CSF 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q72",
+    "question": "What is the exact implementation cost of CSF 2.0 for a 100-employee company?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q73",
+    "question": "What is the average return on investment from adopting CSF 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q74",
+    "question": "What exact percentage reduction in ransomware incidents does CSF 2.0 guarantee?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q75",
+    "question": "Which firewall brand does NIST recommend for organizations using CSF 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q76",
+    "question": "Which antivirus vendor is officially endorsed by the CSF 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q77",
+    "question": "What programming language was used to write the CSF 2.0 Reference Tool?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q78",
+    "question": "What database technology powers the NIST CSF 2.0 Reference Tool?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q79",
+    "question": "How many employees does NIST currently have?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q80",
+    "question": "What is the exact number of cybersecurity professionals employed by NIST?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q81",
+    "question": "What is the current market share of organizations using NIST CSF 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q82",
+    "question": "What percentage of Fortune 500 companies have implemented CSF 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q83",
+    "question": "Which company has the highest CSF 2.0 implementation score?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q84",
+    "question": "What is the exact salary of a cybersecurity manager responsible for CSF 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q85",
+    "question": "What is the average number of hours required to implement CSF 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q86",
+    "question": "What is the guaranteed time required to reach Tier 4?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q87",
+    "question": "Which software development framework must be used to implement CSF 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q88",
+    "question": "Which operating system does NIST recommend for CSF 2.0 implementation?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q89",
+    "question": "What exact number of cybersecurity controls must an organization implement to satisfy CSF 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q90",
+    "question": "What percentage score must an organization achieve to be considered CSF 2.0 compliant?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q91",
+    "question": "Does NIST issue a CSF 2.0 compliance certificate to organizations that complete the framework?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q92",
+    "question": "What exact cybersecurity incident reduction can an organization expect after reaching Tier 4?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q93",
+    "question": "Which cybersecurity vendor has the best rating in the NIST CSF 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q94",
+    "question": "What is the exact number of CSF 2.0 users worldwide as of 2026?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q95",
+    "question": "What is the exact annual subscription price for the NIST CSF 2.0 Reference Tool?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q96",
+    "question": "Which programming framework should developers use to build an application compliant with CSF 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q97",
+    "question": "What exact percentage of cybersecurity risk does the CSF 2.0 eliminate?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q98",
+    "question": "What is the exact market value of organizations using the NIST CSF 2.0?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q99",
+    "question": "What exact number of security incidents does NIST report are prevented by CSF 2.0 each year?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  },
+  {
+    "question_id": "Q100",
+    "question": "What exact percentage of an organization's cybersecurity budget should be allocated to CSF 2.0 implementation?",
+    "document_id": "139f8edb-df7c-4145-9109-e1af654a7278",
+    "correct": 0
+  }
+]
