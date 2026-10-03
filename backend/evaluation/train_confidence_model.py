@@ -1,19 +1,22 @@
 import json
 from pathlib import Path
 
+import joblib
+from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
-from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
 
 
 DATASET_FILE = Path(__file__).parent / "dataset.json"
+MODEL_FILE = Path(__file__).parent / "confidence_model.joblib"
 
 
 with DATASET_FILE.open("r", encoding="utf-8") as file:
     data = json.load(file)
 
 
-ffeatures = [
+features = [
     "top_similarity",
     "max_rerank_score",
     "mean_rerank_score",
@@ -42,6 +45,7 @@ y = [
 
 
 model = Pipeline([
+    ("imputer", SimpleImputer(strategy="median")),
     ("scaler", StandardScaler()),
     (
         "classifier",
@@ -52,8 +56,17 @@ model = Pipeline([
 
 model.fit(X, y)
 
-probabilities = model.predict_proba(X)[:, 1]
 
+joblib.dump(
+    {
+        "model": model,
+        "features": features,
+    },
+    MODEL_FILE,
+)
+
+
+probabilities = model.predict_proba(X)[:, 1]
 
 for row, probability in zip(data, probabilities):
     print(
@@ -63,4 +76,5 @@ for row, probability in zip(data, probabilities):
     )
 
 
-print("\nModel trained successfully.")
+print(f"\nModel saved to: {MODEL_FILE}")
+print("Model trained successfully.")
