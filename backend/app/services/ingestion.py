@@ -17,19 +17,21 @@ def extract_text(file_path: str) -> str:
 
         text = "\n".join(pages)
 
-        # Fix common PDF extraction artifacts.
         text = re.sub(
             r"(?<=\b[A-Za-z])\s+(?=[a-z]{1,3}\b)",
             "",
             text,
         )
 
-        return text
+    elif path.suffix.lower() == ".txt":
+        text = path.read_text(encoding="utf-8")
+    else:
+        raise ValueError("Unsupported file type")
 
-    if path.suffix.lower() == ".txt":
-        return path.read_text(encoding="utf-8")
+    if not text or not text.strip():
+        raise ValueError("Document is empty or contains no readable text")
 
-    raise ValueError("Unsupported file type")
+    return text
 
 
 def chunk_text(

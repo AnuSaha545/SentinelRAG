@@ -18,7 +18,7 @@ def retrieve_chunks(
     db: Session,
     query: str,
     document_id: str,
-    limit: int = 5,
+    limit: int = 20,
 ) -> list[dict]:
     query_embedding = generate_embedding(query)
 
@@ -51,7 +51,7 @@ def keyword_retrieve_chunks(
     db: Session,
     query: str,
     document_id: str,
-    limit: int = 5,
+    limit: int = 20,
 ) -> list[dict]:
     import re
 
@@ -120,11 +120,66 @@ def keyword_retrieve_chunks(
     ]
 
 
+def expand_context(
+    db: Session,
+    chunks: list[dict],
+    window: int = 1,
+) -> list[dict]:
+    if not chunks:
+        return []
+
+    expanded = {}
+
+    chunk_indices = {
+        chunk["chunk_index"]
+        for chunk in chunks
+    }
+
+    for index in chunk_indices:
+        statement = (
+            select(DocumentChunk)
+            .where(
+                DocumentChunk.document_id
+                == chunks[0]["document_id"],
+                DocumentChunk.chunk_index >= index - window,
+                DocumentChunk.chunk_index <= index + window,
+            )
+            .order_by(DocumentChunk.chunk_index)
+        )
+
+        neighbors = db.execute(statement).scalars().all()
+
+        for neighbor in neighbors:
+            if neighbor.id not in expanded:
+                expanded[neighbor.id] = {
+                    "chunk_id": neighbor.id,
+                    "document_id": neighbor.document_id,
+                    "chunk_index": neighbor.chunk_index,
+                    "content": neighbor.content,
+                    "similarity": 0.0,
+                    "keyword_score": 0.0,
+                    "retrieval_methods": ["context"],
+                }
+
+    for chunk in chunks:
+        chunk_id = chunk["chunk_id"]
+
+        if chunk_id in expanded:
+            expanded[chunk_id] = {
+                **expanded[chunk_id],
+                **chunk,
+            }
+        else:
+            expanded[chunk_id] = chunk
+
+    return list(expanded.values())
+
+
 def hybrid_retrieve_chunks(
     db: Session,
     query: str,
     document_id: str,
-    limit: int = 10,
+    limit: int = 20,
 ) -> list[dict]:
     vector_results = retrieve_chunks(
         db=db,
@@ -145,63 +200,38 @@ def hybrid_retrieve_chunks(
     for result in vector_results:
         combined[result["chunk_id"]] = {
             **result,
-            "retrieval_methods": ["vector"],
             "keyword_score": 0.0,
+            "retrieval_methods": ["vector"],
         }
 
     for result in keyword_results:
         chunk_id = result["chunk_id"]
 
         if chunk_id in combined:
-            combined[chunk_id]["retrieval_methods"].append("keyword")
             combined[chunk_id]["keyword_score"] = result.get(
                 "keyword_score",
                 0.0,
             )
+            combined[chunk_id]["retrieval_methods"].append("keyword")
         else:
             combined[chunk_id] = {
                 **result,
                 "similarity": 0.0,
+                "keyword_score": result.get(
+                    "keyword_score",
+                    0.0,
+                ),
                 "retrieval_methods": ["keyword"],
             }
 
-    results = list(combined.values())
+    candidates = list(combined.values())
 
-    # Normalize scores before combining them.
-    max_similarity = max(
-        (item.get("similarity", 0.0) for item in results),
-        default=0.0,
+    return expand_context(
+        db=db,
+        chunks=candidates,
+        window=1,
     )
 
-    max_keyword_score = max(
-        (item.get("keyword_score", 0.0) for item in results),
-        default=0.0,
-    )
-
-    for item in results:
-        vector_score = (
-            item.get("similarity", 0.0) / max_similarity
-            if max_similarity > 0
-            else 0.0
-        )
-
-        keyword_score = (
-            item.get("keyword_score", 0.0) / max_keyword_score
-            if max_keyword_score > 0
-            else 0.0
-        )
-
-        item["hybrid_score"] = round(
-            0.6 * vector_score + 0.4 * keyword_score,
-            4,
-        )
-
-    results.sort(
-        key=lambda item: item["hybrid_score"],
-        reverse=True,
-    )
-
-    return results[:limit]
 
 def rerank_chunks(
     query: str,

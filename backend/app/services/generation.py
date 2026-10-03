@@ -8,6 +8,9 @@ def generate_answer(
     query: str,
     chunks: list[dict],
 ) -> str:
+    if not chunks:
+        return "I could not find the answer in the provided document."
+
     context = "\n\n".join(
         f"[Source {index + 1}]\n{chunk['content']}"
         for index, chunk in enumerate(chunks)
@@ -44,4 +47,8 @@ Answer:
         ],
     )
 
-    return response["message"]["content"]
+    answer = response["message"]["content"]
+    if not answer or not answer.strip():
+        return "I could not find the answer in the provided document."
+
+    return answer
