@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.routes.audit import router as audit_router
 from app.api.routes.documents import router as documents_router
@@ -8,6 +9,15 @@ app = FastAPI(
     title="SentinelRAG",
     description="A self-healing and observable RAG system",
     version="0.1.0",
+)
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 

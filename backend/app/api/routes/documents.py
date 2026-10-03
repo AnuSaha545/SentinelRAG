@@ -13,15 +13,40 @@ from app.services.confidence import calculate_confidence
 from app.services.decision import make_decision, needs_human_review
 from app.services.document_processor import process_document
 from app.services.generation import generate_answer
-from app.services.retrieval import hybrid_retrieve_chunks, rerank_chunks
+from app.services.retrieval import (
+    hybrid_retrieve_chunks,
+    is_list_question,
+    prepare_generation_context,
+    rerank_chunks,
+)
 from app.services.verification import calculate_verification_features
 
+
 router = APIRouter()
+
 
 UPLOAD_DIR = Path("uploads")
 UPLOAD_DIR.mkdir(exist_ok=True)
 
 ALLOWED_EXTENSIONS = {".pdf", ".txt"}
+
+
+@router.get("")
+def list_documents(
+    db: Session = Depends(get_db),
+):
+    documents = db.query(Document).order_by(
+        Document.created_at.desc()
+    ).all()
+
+    return [
+        {
+            "document_id": document.id,
+            "filename": document.filename,
+            "created_at": document.created_at,
+        }
+        for document in documents
+    ]
 
 
 class QueryRequest(BaseModel):
@@ -32,8 +57,10 @@ class QueryRequest(BaseModel):
     def model_post_init(self, __context):
         if self.limit <= 0:
             raise ValueError("limit must be greater than 0")
+
         if not self.query.strip():
             raise ValueError("query cannot be empty")
+
         if not self.document_id.strip():
             raise ValueError("document_id cannot be empty")
 
@@ -67,7 +94,10 @@ def calculate_answer_features(
     ]
 
     rerank_scores = [
-        chunk.get("rerank_score", 0.0)
+        chunk.get(
+            "_confidence_rerank_score",
+            chunk.get("rerank_score", 0.0),
+        )
         for chunk in results
         if chunk.get("rerank_score") is not None
     ]
@@ -198,6 +228,56 @@ async def upload_document(
     }
 
 
+@router.delete("/{document_id}")
+def delete_document(
+    document_id: str,
+    db: Session = Depends(get_db),
+):
+    document = db.get(Document, document_id)
+
+    if document is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Document not found",
+        )
+
+    file_path = UPLOAD_DIR / f"{document_id}_{document.filename}"
+
+    try:
+        db.query(DocumentChunk).filter(
+            DocumentChunk.document_id == document_id
+        ).delete(synchronize_session=False)
+
+        db.delete(document)
+        db.commit()
+
+    except Exception:
+        db.rollback()
+
+        raise HTTPException(
+            status_code=500,
+            detail="Failed to delete document from database.",
+        )
+
+    if file_path.exists():
+        try:
+            file_path.unlink()
+        except OSError:
+            raise HTTPException(
+                status_code=500,
+                detail=(
+                    "Document was removed from the database, "
+                    "but the uploaded file could not be deleted."
+                ),
+            )
+
+    return {
+        "document_id": document_id,
+        "filename": document.filename,
+        "status": "deleted",
+    }
+
+
 @router.post("/query")
 def query_documents(
     request: QueryRequest,
@@ -206,6 +286,7 @@ def query_documents(
     start_time = perf_counter()
 
     document_exists = db.get(Document, request.document_id)
+
     if document_exists is None:
         raise HTTPException(
             status_code=404,
@@ -213,11 +294,17 @@ def query_documents(
         )
 
     def run_pipeline(limit: int):
+        retrieval_limit = (
+            max(limit * 2, 10)
+            if is_list_question(request.query)
+            else limit
+        )
+
         candidates = hybrid_retrieve_chunks(
             db=db,
             query=request.query,
             document_id=request.document_id,
-            limit=limit,
+            limit=retrieval_limit,
         )
 
         results = rerank_chunks(
@@ -226,9 +313,15 @@ def query_documents(
             limit=limit,
         )
 
-        answer = generate_answer(
+        generation_context = prepare_generation_context(
             query=request.query,
             chunks=results,
+            max_chunks=3,
+        )
+
+        answer = generate_answer(
+            query=request.query,
+            chunks=generation_context,
         )
 
         features = calculate_answer_features(
@@ -284,5 +377,15 @@ def query_documents(
         "retry": retry,
         "human_review": human_review,
         "latency_ms": latency_ms,
-        "results": results,
+        "results": [
+            {
+                key: value
+                for key, value in result.items()
+                if key not in {
+                    "_rerank_evidence",
+                    "_confidence_rerank_score",
+                }
+            }
+            for result in results
+        ],
     }
