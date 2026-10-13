@@ -1124,4 +1124,39 @@ select {
   .audit-detail-content {
     grid-template-columns: 1fr;
   }
+  
+.retrieved-sources {
+  padding: 20px;
+}
+
+.retrieved-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.retrieved-summary::-webkit-details-marker {
+  display: none;
+}
+
+.retrieved-summary h3 {
+  margin-bottom: 0;
+}
+
+.retrieved-summary > span {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+.retrieved-sources[open] .retrieved-summary {
+  margin-bottom: 20px;
+}
+
+.retrieved-sources .retrieved-list {
+  margin-top: 0;
+}
+
 }

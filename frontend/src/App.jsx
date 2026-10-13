@@ -1,7 +1,6 @@
+
 import { useEffect, useState } from 'react'
-
 import './App.css'
-
 import {
   getAuditSummary,
   getHealth,
@@ -55,43 +54,37 @@ function App() {
             className={page === 'overview' ? 'nav-item active' : 'nav-item'}
             onClick={() => setPage('overview')}
           >
-            <span>◉</span>
-            Overview
+            <span>◉</span> Overview
           </button>
 
           <button
             className={page === 'documents' ? 'nav-item active' : 'nav-item'}
             onClick={() => setPage('documents')}
           >
-            <span>▣</span>
-            Documents
+            <span>▣</span> Documents
           </button>
 
           <button
             className={page === 'query' ? 'nav-item active' : 'nav-item'}
             onClick={() => setPage('query')}
           >
-            <span>⌕</span>
-            Query
+            <span>⌕</span> Query
           </button>
 
           <button
             className={page === 'audit' ? 'nav-item active' : 'nav-item'}
             onClick={() => setPage('audit')}
           >
-            <span>◫</span>
-            Audit Logs
+            <span>◫</span> Audit Logs
           </button>
         </nav>
 
         <div className="sidebar-status">
-          <div className="status-dot"></div>
+          <div className="status-dot" />
           <div>
             <strong>System Status</strong>
             <span>
-              {backendOnline
-                ? 'All systems operational'
-                : 'Backend offline'}
+              {backendOnline ? 'All systems operational' : 'Backend offline'}
             </span>
           </div>
         </div>
@@ -100,21 +93,10 @@ function App() {
       <main className="main-content">
         {error && <div className="error-banner">{error}</div>}
 
-        {page === 'overview' && (
-          <OverviewPage summary={summary} />
-        )}
-
-        {page === 'documents' && (
-          <DocumentsPage />
-        )}
-
-        {page === 'query' && (
-          <QueryPage />
-        )}
-
-        {page === 'audit' && (
-          <AuditLogsPage />
-        )}
+        {page === 'overview' && <OverviewPage summary={summary} />}
+        {page === 'documents' && <DocumentsPage />}
+        {page === 'query' && <QueryPage />}
+        {page === 'audit' && <AuditLogsPage />}
       </main>
     </div>
   )
@@ -127,18 +109,12 @@ function OverviewPage({ summary }) {
         <div>
           <p className="eyebrow">SYSTEM OVERVIEW</p>
           <h2>RAG Reliability Dashboard</h2>
-          <p>
-            Monitor retrieval, confidence, verification and decision outcomes.
-          </p>
+          <p>Monitor retrieval, confidence, verification and decision outcomes.</p>
         </div>
       </header>
 
       <section className="stats-grid">
-        <StatCard
-          label="Total Queries"
-          value={summary?.total_queries ?? 0}
-        />
-
+        <StatCard label="Total Queries" value={summary?.total_queries ?? 0} />
         <StatCard
           label="Average Confidence"
           value={
@@ -147,7 +123,6 @@ function OverviewPage({ summary }) {
               : '0%'
           }
         />
-
         <StatCard
           label="Average Latency"
           value={
@@ -156,11 +131,7 @@ function OverviewPage({ summary }) {
               : '0s'
           }
         />
-
-        <StatCard
-          label="Accepted"
-          value={summary?.accepted_count ?? 0}
-        />
+        <StatCard label="Accepted" value={summary?.accepted_count ?? 0} />
       </section>
 
       <section className="dashboard-grid">
@@ -171,37 +142,12 @@ function OverviewPage({ summary }) {
               <h3>RAG Processing Flow</h3>
             </div>
           </div>
-
           <div className="pipeline">
-            <PipelineStep
-              number="01"
-              title="Retrieve"
-              text="Hybrid vector + keyword search"
-            />
-
-            <PipelineStep
-              number="02"
-              title="Rerank"
-              text="Cross-encoder relevance scoring"
-            />
-
-            <PipelineStep
-              number="03"
-              title="Generate"
-              text="Local LLM answer generation"
-            />
-
-            <PipelineStep
-              number="04"
-              title="Verify"
-              text="Semantic and NLI verification"
-            />
-
-            <PipelineStep
-              number="05"
-              title="Decide"
-              text="Accept, retry or human review"
-            />
+            <PipelineStep number="01" title="Retrieve" text="Hybrid vector + keyword search" />
+            <PipelineStep number="02" title="Rerank" text="Cross-encoder relevance scoring" />
+            <PipelineStep number="03" title="Generate" text="Local LLM answer generation" />
+            <PipelineStep number="04" title="Verify" text="Semantic and NLI verification" />
+            <PipelineStep number="05" title="Decide" text="Accept, retry or human review" />
           </div>
         </div>
 
@@ -212,18 +158,15 @@ function OverviewPage({ summary }) {
               <h3>System Behaviour</h3>
             </div>
           </div>
-
           <div className="decision-list">
             <div>
               <span className="decision-badge accept">ACCEPT</span>
               <p>High-confidence answers are returned directly.</p>
             </div>
-
             <div>
               <span className="decision-badge retry">RETRY</span>
               <p>Low-confidence answers trigger expanded retrieval.</p>
             </div>
-
             <div>
               <span className="decision-badge review">REVIEW</span>
               <p>Uncertain answers are flagged for human review.</p>
@@ -251,7 +194,6 @@ function DocumentsPage() {
   async function loadDocuments() {
     try {
       setLoadingDocuments(true)
-
       const data = await getDocuments()
       setDocuments(data)
     } catch (err) {
@@ -270,10 +212,8 @@ function DocumentsPage() {
 
     try {
       const data = await uploadDocument(file)
-
       setResult(data)
       setFile(null)
-
       await loadDocuments()
     } catch (err) {
       setError(err.message)
@@ -284,7 +224,7 @@ function DocumentsPage() {
 
   async function handleDelete(documentId, filename) {
     const confirmed = window.confirm(
-      `Delete "${filename}"?\n\nThis will remove the document and its chunks. Audit logs will be preserved.`
+      `Delete "${filename}"?\n\nThis will remove the document and its chunks. Audit logs will be preserved.`,
     )
 
     if (!confirmed) return
@@ -308,9 +248,7 @@ function DocumentsPage() {
         <div>
           <p className="eyebrow">DOCUMENTS</p>
           <h2>Knowledge Base</h2>
-          <p>
-            Upload PDF or TXT documents for retrieval and question answering.
-          </p>
+          <p>Upload PDF or TXT documents for retrieval and question answering.</p>
         </div>
       </header>
 
@@ -357,11 +295,7 @@ function DocumentsPage() {
           </div>
         )}
 
-        {error && (
-          <div className="error-card">
-            {error}
-          </div>
-        )}
+        {error && <div className="error-card">{error}</div>}
       </section>
 
       <section className="panel">
@@ -370,7 +304,6 @@ function DocumentsPage() {
             <p className="eyebrow">STORED DOCUMENTS</p>
             <h3>Knowledge Base Files</h3>
           </div>
-
           <span>
             {documents.length} document{documents.length !== 1 ? 's' : ''}
           </span>
@@ -396,14 +329,7 @@ function DocumentsPage() {
               >
                 <div>
                   <strong>{document.filename}</strong>
-
-                  <div
-                    style={{
-                      marginTop: '5px',
-                      fontSize: '13px',
-                      opacity: 0.6,
-                    }}
-                  >
+                  <div style={{ marginTop: '5px', fontSize: '13px', opacity: 0.6 }}>
                     Uploaded{' '}
                     {document.created_at
                       ? new Date(document.created_at).toLocaleString()
@@ -414,10 +340,7 @@ function DocumentsPage() {
                 <button
                   type="button"
                   onClick={() =>
-                    handleDelete(
-                      document.document_id,
-                      document.filename
-                    )
+                    handleDelete(document.document_id, document.filename)
                   }
                   disabled={deletingId === document.document_id}
                   style={{
@@ -430,13 +353,10 @@ function DocumentsPage() {
                       deletingId === document.document_id
                         ? 'not-allowed'
                         : 'pointer',
-                    opacity:
-                      deletingId === document.document_id ? 0.6 : 1,
+                    opacity: deletingId === document.document_id ? 0.6 : 1,
                   }}
                 >
-                  {deletingId === document.document_id
-                    ? 'Deleting...'
-                    : 'Delete'}
+                  {deletingId === document.document_id ? 'Deleting...' : 'Delete'}
                 </button>
               </div>
             ))}
@@ -466,14 +386,13 @@ function QueryPage() {
       setError('')
 
       const data = await getDocuments()
-
       setDocuments(data)
 
       if (data.length > 0) {
         setDocumentId((current) =>
           data.some((doc) => doc.document_id === current)
             ? current
-            : data[0].document_id
+            : data[0].document_id,
         )
       } else {
         setDocumentId('')
@@ -498,12 +417,7 @@ function QueryPage() {
     setResult(null)
 
     try {
-      const data = await queryDocument(
-        query.trim(),
-        documentId,
-        5
-      )
-
+      const data = await queryDocument(query.trim(), documentId, 5)
       setResult(data)
     } catch (err) {
       setError(err.message)
@@ -518,9 +432,7 @@ function QueryPage() {
         <div>
           <p className="eyebrow">QUERY</p>
           <h2>Ask Your Documents</h2>
-          <p>
-            Query the knowledge base and inspect the reliability decision.
-          </p>
+          <p>Query the knowledge base and inspect the reliability decision.</p>
         </div>
       </header>
 
@@ -534,33 +446,24 @@ function QueryPage() {
 
         <form onSubmit={handleQuery}>
           <label className="form-label">Document</label>
-
           <select
             className="document-select"
             value={documentId}
             onChange={(event) => setDocumentId(event.target.value)}
             disabled={loadingDocuments || querying}
           >
-            {loadingDocuments && (
-              <option value="">Loading documents...</option>
-            )}
-
+            {loadingDocuments && <option value="">Loading documents...</option>}
             {!loadingDocuments && documents.length === 0 && (
               <option value="">No documents available</option>
             )}
-
             {documents.map((document) => (
-              <option
-                key={document.document_id}
-                value={document.document_id}
-              >
+              <option key={document.document_id} value={document.document_id}>
                 {document.filename}
               </option>
             ))}
           </select>
 
           <label className="form-label">Question</label>
-
           <textarea
             className="query-input"
             value={query}
@@ -579,11 +482,7 @@ function QueryPage() {
           </button>
         </form>
 
-        {error && (
-          <div className="error-card">
-            {error}
-          </div>
-        )}
+        {error && <div className="error-card">{error}</div>}
       </section>
 
       {result && <QueryResult result={result} />}
@@ -607,32 +506,23 @@ function QueryResult({ result }) {
             <p className="eyebrow">GENERATED ANSWER</p>
             <h3>Answer</h3>
           </div>
-
           <span className={`decision-badge ${decisionClass}`}>
             {result.decision.replaceAll('_', ' ').toUpperCase()}
           </span>
         </div>
 
-        <div className="answer-content">
-          {result.answer}
-        </div>
+        <div className="answer-content">{result.answer}</div>
 
         <div className="result-stats">
           <ResultStat
             label="Confidence"
             value={`${(result.confidence * 100).toFixed(2)}%`}
           />
-
           <ResultStat
             label="Latency"
             value={`${(result.latency_ms / 1000).toFixed(2)}s`}
           />
-
-          <ResultStat
-            label="Retry"
-            value={result.retry ? 'Yes' : 'No'}
-          />
-
+          <ResultStat label="Retry" value={result.retry ? 'Yes' : 'No'} />
           <ResultStat
             label="Human Review"
             value={result.human_review ? 'Required' : 'No'}
@@ -640,34 +530,27 @@ function QueryResult({ result }) {
         </div>
       </div>
 
-      <div className="panel">
-        <div className="panel-header">
+      <details className="panel retrieved-sources">
+        <summary className="retrieved-summary">
           <div>
             <p className="eyebrow">RETRIEVAL</p>
-            <h3>Retrieved Context</h3>
+            <h3>View Retrieved Sources</h3>
           </div>
-        </div>
+          <span>{result.results?.length ?? 0} chunks</span>
+        </summary>
 
         <div className="retrieved-list">
           {result.results?.length ? (
             result.results.map((item, index) => (
-              <div
-                className="retrieved-item"
-                key={index}
-              >
+              <div className="retrieved-item" key={index}>
                 <div className="retrieved-header">
-                  <strong>
-                    Chunk {item.chunk_index ?? index + 1}
-                  </strong>
-
+                  <strong>Chunk {item.chunk_index ?? index + 1}</strong>
                   {item.rerank_score !== undefined && (
                     <span>
-                      Rerank:{' '}
-                      {Number(item.rerank_score).toFixed(3)}
+                      Rerank: {Number(item.rerank_score).toFixed(3)}
                     </span>
                   )}
                 </div>
-
                 <p>{item.content}</p>
               </div>
             ))
@@ -675,7 +558,7 @@ function QueryResult({ result }) {
             <p>No retrieval results returned.</p>
           )}
         </div>
-      </div>
+      </details>
     </section>
   )
 }
@@ -695,13 +578,9 @@ function AuditLogsPage() {
       setError('')
 
       const response = await fetch(`${API_BASE_URL}/audit/logs`)
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch audit logs')
-      }
+      if (!response.ok) throw new Error('Failed to fetch audit logs')
 
       const data = await response.json()
-
       setLogs(Array.isArray(data) ? data : data.logs || [])
     } catch (err) {
       setError(err.message)
@@ -716,9 +595,7 @@ function AuditLogsPage() {
         <div>
           <p className="eyebrow">AUDIT</p>
           <h2>Audit Logs</h2>
-          <p>
-            Inspect query decisions, confidence, retries and latency.
-          </p>
+          <p>Inspect query decisions, confidence, retries and latency.</p>
         </div>
       </header>
 
@@ -728,7 +605,6 @@ function AuditLogsPage() {
             <p className="eyebrow">QUERY HISTORY</p>
             <h3>System Activity</h3>
           </div>
-
           <button
             className="primary-button"
             onClick={loadLogs}
@@ -738,11 +614,7 @@ function AuditLogsPage() {
           </button>
         </div>
 
-        {error && (
-          <div className="error-card">
-            {error}
-          </div>
-        )}
+        {error && <div className="error-card">{error}</div>}
 
         {loading ? (
           <p>Loading audit logs...</p>
@@ -767,7 +639,6 @@ function AuditLogsPage() {
                   <th style={tableHeaderStyle}>Latency</th>
                 </tr>
               </thead>
-
               <tbody>
                 {logs.map((log) => (
                   <tr key={log.id}>
@@ -776,17 +647,12 @@ function AuditLogsPage() {
                         ? new Date(log.created_at).toLocaleString()
                         : '-'}
                     </td>
-
-                    <td style={tableCellStyle}>
-                      {log.query}
-                    </td>
-
+                    <td style={tableCellStyle}>{log.query}</td>
                     <td style={tableCellStyle}>
                       {log.confidence !== undefined
                         ? `${(log.confidence * 100).toFixed(2)}%`
                         : '-'}
                     </td>
-
                     <td style={tableCellStyle}>
                       <span
                         className={`decision-badge ${
@@ -798,17 +664,11 @@ function AuditLogsPage() {
                         }`}
                       >
                         {log.decision
-                          ? log.decision
-                              .replaceAll('_', ' ')
-                              .toUpperCase()
+                          ? log.decision.replaceAll('_', ' ').toUpperCase()
                           : '-'}
                       </span>
                     </td>
-
-                    <td style={tableCellStyle}>
-                      {log.retry ? 'Yes' : 'No'}
-                    </td>
-
+                    <td style={tableCellStyle}>{log.retry ? 'Yes' : 'No'}</td>
                     <td style={tableCellStyle}>
                       {log.latency_ms !== undefined
                         ? `${(log.latency_ms / 1000).toFixed(2)}s`
@@ -850,7 +710,6 @@ function PipelineStep({ number, title, text }) {
   return (
     <div className="pipeline-step">
       <span className="pipeline-number">{number}</span>
-
       <div>
         <strong>{title}</strong>
         <span>{text}</span>
